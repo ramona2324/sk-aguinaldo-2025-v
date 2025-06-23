@@ -27,5 +27,10 @@ Route::get('pending-approval', function () {
     return Inertia::render('auth/PendingApproval');
 })->middleware(['auth', 'verified'])->name('pending-approval');
 
+// Superadmin routes
+Route::middleware(['auth', 'verified', 'user.type:superadmin'])->group(function () {
+   Route::get('/pending/approvals', [\App\Http\Controllers\SuperAdmin\PendingApprovalsController::class, 'index'])->name('pending.approvals.index');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

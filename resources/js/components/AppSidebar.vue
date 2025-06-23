@@ -55,23 +55,26 @@ const mainNavItems = computed((): NavItem[] => {
     if (userType === 'superadmin') {
         items.push(
             {
-                title: 'User Management',
-                href: '/superadmin/users',
-                icon: Users,
-            },
-            {
                 title: 'Pending Approvals',
-                href: '/superadmin/approvals',
+                href: '/pending/approvals',
                 icon: UserCheck,
             },
             {
+                title: 'User Management',
+                // href: '/superadmin/users',
+                href: '#',
+                icon: Users,
+            },
+            {
                 title: 'System Settings',
-                href: '/superadmin/settings',
+                // href: '/superadmin/settings',
+                href: '#',
                 icon: Settings,
             },
             {
                 title: 'Reports & Analytics',
-                href: '/superadmin/reports',
+                // href: '/superadmin/reports',
+                href: '#',
                 icon: BarChart3,
             }
         );

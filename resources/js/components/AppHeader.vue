@@ -85,7 +85,7 @@ const mainNavItems = computed((): NavItem[] => {
                 icon: Users,
             },
             {
-                title: 'Approvals',
+                title: 'PendingApprovalsController',
                 href: '/superadmin/approvals',
                 icon: UserCheck,
             }
