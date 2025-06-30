@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import {
     Table,
     TableBody,
@@ -10,7 +10,22 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table'
+} from '@/components/ui/table';
+import { Button } from "@/components/ui/button"
+
+interface PendingOfficialUser {
+    id: number,
+    name: string,
+    email: string,
+    user_type: string,
+    status: string,
+}
+
+interface Props{
+    pendingOfficialUsers: PendingOfficialUser[];
+}
+
+const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,27 +46,23 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <TableCaption>A list of all the pending admin approvals.</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead class="w-[100px]">
-                                Admin ID
-                            </TableHead>
+                            <TableHead class="w-[100px]">Admin ID</TableHead>
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
-                            <TableHead class="text-center">
-                                Action
-                            </TableHead>
+                            <TableHead class="text-center">Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
-                            <TableCell class="font-medium">
-                                INV001
-                            </TableCell>
-                            <TableCell>Paid</TableCell>
-                            <TableCell>Credit Card</TableCell>
-                            <TableCell class="grid grid-cols-3 text-center">
-                                <Link href="#" class="-mr-64 cursor-pointer">Edit</Link>
-                                <Link href="#" class="text-green-500 cursor-pointer">Accept</Link>
-                                <Link href="#" class="-ml-64 text-red-500 cursor-pointer">Delete</Link>
+                        <TableRow v-for="pendingOfficialUser in props.pendingOfficialUsers" :key="pendingOfficialUser.id">
+                            <TableCell class="font-medium">{{ pendingOfficialUser.id }}</TableCell>
+                            <TableCell>{{ pendingOfficialUser.name }}</TableCell>
+                            <TableCell>{{ pendingOfficialUser.email }}</TableCell>
+                            <TableCell class="text-center">
+                                <div class="flex flex-wrap items-center justify-center gap-2 md:flex-row">
+                                    <Button>Approve</Button>
+                                    <Button variant="secondary">Edit</Button>
+                                    <Button variant="destructive">Delete</Button>
+                                </div>
                             </TableCell>
                         </TableRow>
                     </TableBody>
