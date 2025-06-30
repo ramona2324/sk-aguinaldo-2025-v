@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,8 +14,15 @@ class PendingApprovalsController extends Controller
      */
     public function index()
     {
-//        return Inertia::render('settings/Password');
-        return Inertia::render('SuperAdmin/PendingApprovals');
+        // Get all users with 'official' user_type and 'pending' status
+        $pendingOfficialUsers = User::all()
+            ->filter(function ($user) {
+                return $user->isPending() && $user->isOfficial();
+            });
+
+        return Inertia::render('SuperAdmin/PendingApprovals', [
+            'pendingOfficialUsers' => $pendingOfficialUsers,
+        ]);
     }
 
     /**
