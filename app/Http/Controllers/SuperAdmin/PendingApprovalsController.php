@@ -26,6 +26,45 @@ class PendingApprovalsController extends Controller
     }
 
     /**
+     * Approve a pending user.
+     */
+    public function approve(Request $request, User $user)
+    {
+        // Validate that the user is pending and official
+        if (!$user->isPending() || !$user->isOfficial()) {
+            return redirect()->back()->with('error', 'SK Member is not eligible for approval.');
+        }
+
+        // Update user status to approved
+        $user->update([
+            'status' => 'approved',
+        ]);
+
+        return redirect()->back()->with('success', 'SK Official has been approved to be an admin.');
+    }
+
+    /**
+     * Reject a pending user.
+     */
+    public function reject(Request $request, User $user)
+    {
+        // Validate that the user is pending and official
+        if (!$user->isPending() || !$user->isOfficial()) {
+            return redirect()->back()->with('error', 'SK Member is not eligible for rejection.');
+        }
+
+        // Update user status to rejected or delete the user
+        $user->update([
+            'status' => 'rejected',
+        ]);
+
+        // Alternative: Delete the user entirely
+        // $user->delete();
+
+        return redirect()->back()->with('success', 'SK Official Account has been rejected successfully.');
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
