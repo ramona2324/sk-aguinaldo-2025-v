@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import {
     Table,
     TableBody,
@@ -12,13 +12,12 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from "@/components/ui/button"
+import { ref } from 'vue';
 
 interface PendingOfficialUser {
     id: number,
     name: string,
     email: string,
-    user_type: string,
-    status: string,
 }
 
 interface Props{
@@ -33,6 +32,37 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/pending/approvals',
     },
 ];
+
+// Track loading states for individual buttons
+const loadingStates = ref<{ [key: string]: boolean }>({});
+
+const approveUser = (userId: number) => {
+    const loadingKey = `approve-${userId}`;
+    loadingStates.value[loadingKey] = true;
+
+    router.patch(route('pending.approvals.approve', userId), {}, {
+        onFinish: () => {
+            loadingStates.value[loadingKey] = false;
+        },
+        onError: (errors) => {
+            console.error('Approval failed:', errors);
+        }
+    });
+}
+
+const rejectUser = (userId: number) => {
+    const loadingKey = `reject-${userId}`;
+    loadingStates.value[loadingKey] = true;
+
+    router.patch(route('pending.approvals.reject', userId), {}, {
+        onFinish: () => {
+            loadingStates.value[loadingKey] = false;
+        },
+        onError: (errors) => {
+            console.error('Rejection failed:', errors);
+        }
+    });
+};
 </script>
 
 <template>
@@ -59,9 +89,19 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <TableCell>{{ pendingOfficialUser.email }}</TableCell>
                             <TableCell class="text-center">
                                 <div class="flex flex-wrap items-center justify-center gap-2 md:flex-row">
-                                    <Button>Approve</Button>
-                                    <Button variant="secondary">Edit</Button>
-                                    <Button variant="destructive">Delete</Button>
+                                    <Button
+                                        @click="approveUser(pendingOfficialUser.id)"
+                                        :disabled="loadingStates[`approve-${pendingOfficialUser.id}`] || loadingStates[`reject-${pendingOfficialUser.id}`]"
+                                        class="cursor-pointer">
+                                        {{ loadingStates[`approve-${pendingOfficialUser.id}`] ? 'Approving...' : 'Approve' }}
+                                    </Button>
+                                    <Button
+                                        variant="destructive"
+                                        @click="rejectUser(pendingOfficialUser.id)"
+                                        :disabled="loadingStates[`approve-${pendingOfficialUser.id}`] || loadingStates[`reject-${pendingOfficialUser.id}`]"
+                                        class="cursor-pointer">
+                                        {{ loadingStates[`reject-${pendingOfficialUser.id}`] ? 'Rejecting...' : 'Reject' }}
+                                    </Button>
                                 </div>
                             </TableCell>
                         </TableRow>
