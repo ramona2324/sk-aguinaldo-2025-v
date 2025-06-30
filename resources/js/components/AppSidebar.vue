@@ -17,19 +17,19 @@ const dashboardConfig = computed(() => {
     const userType = auth.value.user?.user_type;
 
     switch (userType) {
-        case 'superadmin':
+        case 'Superadmin':
             return {
                 title: 'Super Admin Dashboard',
                 href: '/superadmin/dashboard',
                 icon: Shield,
             };
-        case 'official':
+        case 'Official':
             return {
                 title: 'SK Official Dashboard',
                 href: '/official/dashboard',
                 icon: UserCheck,
             };
-        case 'member':
+        case 'Member':
         default:
             return {
                 title: 'Member Dashboard',
@@ -52,7 +52,7 @@ const mainNavItems = computed((): NavItem[] => {
     ];
 
     // Add role-specific navigation items
-    if (userType === 'superadmin') {
+    if (userType === 'Superadmin') {
         items.push(
             {
                 title: 'Pending Approvals',
@@ -61,8 +61,7 @@ const mainNavItems = computed((): NavItem[] => {
             },
             {
                 title: 'User Management',
-                // href: '/superadmin/users',
-                href: '#',
+                href: '/user/management',
                 icon: Users,
             },
             {
@@ -78,7 +77,7 @@ const mainNavItems = computed((): NavItem[] => {
                 icon: BarChart3,
             }
         );
-    } else if (userType === 'official') {
+    } else if (userType === 'Official') {
         items.push(
             {
                 title: 'SK Programs',
@@ -101,7 +100,7 @@ const mainNavItems = computed((): NavItem[] => {
                 icon: BarChart3,
             }
         );
-    } else if (userType === 'member') {
+    } else if (userType === 'Member') {
         items.push(
             {
                 title: 'My Programs',

@@ -10,11 +10,11 @@ import { LoaderCircle, ArrowLeft } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
-    userType?: 'member' | 'official';
+    userType?: 'Member' | 'Official';
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    userType: 'member'
+    userType: 'Member'
 });
 
 const form = useForm({
@@ -25,17 +25,17 @@ const form = useForm({
 });
 
 const pageTitle = computed(() => {
-    return props.userType === 'official' ? 'Create SK Official Account' : 'Create SK Member Account';
+    return props.userType === 'Official' ? 'Create SK Official Account' : 'Create SK Member Account';
 })
 
 const pageDescription = computed(() => {
-    return props.userType === 'official'
+    return props.userType === 'Official'
         ? 'Enter your details below to create your SK Official account'
         : 'Enter your details below to create your SK Member account';
 });
 
 const submitRoute = computed(() => {
-    return props.userType === 'official' ? 'register.official.store' : 'register.member.store';
+    return props.userType === 'Official' ? 'register.official.store' : 'register.member.store';
 });
 
 const submit = () => {
@@ -47,7 +47,7 @@ const submit = () => {
 
 <template>
     <AuthBase :title="pageTitle" :description="pageDescription">
-        <Head :title="`Register as ${userType === 'official' ? 'SK Official' : 'SK Member'}`" />
+        <Head :title="`Register as ${userType === 'Official' ? 'SK Official' : 'SK Member'}`" />
 
         <form @submit.prevent="submit" class="flex flex-col gap-6">
             <!-- Back to selection link -->
@@ -119,7 +119,7 @@ const submit = () => {
                 <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
                     <span v-if="!form.processing">
-                        Create {{ userType === 'official' ? 'SK Official' : 'SK Member' }} Account
+                        Create {{ userType === 'Official' ? 'SK Official' : 'SK Member' }} Account
                     </span>
                     <span v-else>Creating account...</span>
                 </Button>

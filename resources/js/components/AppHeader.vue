@@ -37,7 +37,7 @@ const dashboardConfig = computed(() => {
     const userType = auth.value.user?.user_type;
 
     switch (userType) {
-        case 'superadmin':
+        case 'Superadmin':
             return {
                 title: 'Super Admin Dashboard',
                 href: '/superadmin/dashboard',
@@ -45,7 +45,7 @@ const dashboardConfig = computed(() => {
                 description: 'Administrative Control Panel'
             };
 
-        case 'official':
+        case 'Official':
             return {
                 title: 'SK Official Dashboard',
                 href: '/official/dashboard',
@@ -53,7 +53,7 @@ const dashboardConfig = computed(() => {
                 description: 'Official Management Portal'
             };
 
-        case 'member':
+        case 'Member':
         default:
             return {
                 title: 'Member Dashboard',
@@ -77,7 +77,7 @@ const mainNavItems = computed((): NavItem[] => {
     // Add additional menu items based on user type
     const userType = auth.value.user?.user_type;
 
-    if (userType === 'superadmin') {
+    if (userType === 'Superadmin') {
         items.push(
             {
                 title: 'User Management',
@@ -90,7 +90,7 @@ const mainNavItems = computed((): NavItem[] => {
                 icon: UserCheck,
             }
         );
-    } else if (userType === 'official') {
+    } else if (userType === 'Official') {
         items.push(
             {
                 title: 'Programs',

@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
     public function createMember(): Response
     {
         return Inertia::render('auth/Register', [
-            'userType' => 'member'
+            'userType' => 'Member'
         ]);
     }
 
@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
     public function createOfficial(): Response
     {
         return Inertia::render('auth/Register', [
-            'userType' => 'official'
+            'userType' => 'Official'
         ]);
     }
 
@@ -58,8 +58,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => 'member',
-            'status' => 'approved', // Members are auto-approved
+            'user_type' => 'Member',
+            'status' => 'Approved', // Members are auto-approved
         ]);
 
         event(new Registered($user));
@@ -83,8 +83,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => 'official',
-            'status' => 'pending', // Officials start as pending
+            'user_type' => 'Official',
+            'status' => 'Pending', // Officials start as pending
         ]);
 
         event(new Registered($user));
