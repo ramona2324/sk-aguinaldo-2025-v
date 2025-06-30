@@ -51,31 +51,31 @@ class User extends Authenticatable
     // Helper methods for use types
     public function isMember(): bool
     {
-        return $this->user_type === 'member';
+        return $this->user_type === 'Member';
     }
 
     public function isOfficial(): bool
     {
-        return $this->user_type === 'official';
+        return $this->user_type === 'Official';
     }
 
     public function isSuperAdmin(): bool
     {
-        return $this->user_type === 'superadmin';
+        return $this->user_type === 'Superadmin';
     }
 
     public function isApproved(): bool
     {
-        return $this->status === 'approved';
+        return $this->status === 'Approved';
     }
 
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status === 'Pending';
     }
 
     public function isRejected(): bool
     {
-        return $this->status === 'rejected';
+        return $this->status === 'Rejected';
     }
 }
