@@ -31,8 +31,8 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
-    user_type: 'member' | 'official' | 'superadmin';
-    status: 'pending' | 'approved' | 'rejected';
+    user_type: 'Member' | 'Official' | 'Superadmin';
+    status: 'Pending' | 'Approved' | 'Rejected';
     created_at: string;
     updated_at: string;
 }
